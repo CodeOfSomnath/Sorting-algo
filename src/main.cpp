@@ -6,7 +6,7 @@ using namespace std;
 
 // first we will create a class that
 // will be be our shorting container.
-class array1 {
+class Array {
 public:
   vector<int> vec;
   int mid;
@@ -14,7 +14,7 @@ public:
   int min;
   int count;
 
-  array1(int min) { this->min = min; }
+  Array(int min) { this->min = min; }
 
   bool setNum(int num) {
     int mid_i;
@@ -91,16 +91,18 @@ void display(int *arr, int len) {
   cout << endl;
 }
 
-void sort1(int *arr, int len) {
-  array1 *a = new array1(arr[0]);
+void sortAlgo(int *arr, int len) {
+  Array *sortArray = new Array(arr[0]);
   for (int i = 0; i < len; i++) {
-    a->setNum(arr[i]);
+    sortArray->setNum(arr[i]);
   }
-  a->getArray(arr);
-  delete a;
-  cout << "Loop runs: " << a->count << " in " << len << endl;
+  sortArray->getArray(arr);
+  delete sortArray;
+  // This only for debug. To check latency
+  cout << "Loop runs: " << sortArray->count << " in " << len << endl;
 }
 
+// This function generates random functions
 void rand(int *arr, int len) {
   srand(time(0)); // seed the random number generator with the current time
   for (int i = 0; i < len; i++) {
@@ -111,12 +113,19 @@ void rand(int *arr, int len) {
 }
 
 int main() {
+  // A simple demo of algo
   int len = 9000;
   int *arr = new int[len];
   rand(arr, len);
-  //display(arr, len);
-  sort1(arr, len);
-  //display(arr, len);
+  // display(arr, len);
+  sortAlgo(arr, len);
+  // display(arr, len);
   delete[] arr;
 }
+
+// To build use g++ main.c -o main (On Linux)
+// In terminal, $ ./main
+// Benchmarking with hyperfine cmd tool
+// Use hyperfine ./main
+// For see program output use below cmd
 // hyperfine --show-output ./main
